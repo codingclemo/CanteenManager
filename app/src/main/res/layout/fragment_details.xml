@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".ui.DetailsFragment">
+
+	<ScrollView
+		android:id="@+id/login_form"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginBottom="8dp"
+		android:layout_marginEnd="8dp"
+		android:layout_marginStart="8dp"
+		android:layout_marginTop="8dp">
+
+		<LinearLayout
+			android:id="@+id/email_login_form"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<EditText
+					android:id="@+id/edtCanteenName"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_CanteenName"
+					android:inputType="text"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:layout_marginBottom="4dp"/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<EditText
+					android:id="@+id/edtDailyMenu"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_DailyMenu"
+					android:inputType="text"
+					android:maxLines="30"
+					android:singleLine="false"
+					android:layout_marginBottom="4dp"/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<EditText
+					android:id="@+id/edtMenuPrice"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_MenuPrice"
+					android:inputType="numberDecimal"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:layout_marginBottom="4dp"/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<EditText
+					android:id="@+id/edtAddress"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_Address"
+					android:inputType="textPostalAddress"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:layout_marginBottom="4dp"/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<EditText
+					android:id="@+id/edtWebsite"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_Website"
+					android:inputType="textWebEmailAddress"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:layout_marginBottom="4dp"/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<EditText
+					android:id="@+id/edtPhone"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_Phone"
+					android:inputType="phone"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:layout_marginBottom="4dp"/>
+			</android.support.design.widget.TextInputLayout>
+
+			<TextView
+				android:id="@+id/txtWaitingTime"
+				android:layout_margin="20dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+			<SeekBar
+				android:id="@+id/skbWaitingTime"
+				android:max="60"
+				android:progress="25"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="16dp"/>
+
+
+			<Button
+				android:id="@+id/btnSaveDetails"
+				style="?android:textAppearanceSmall"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:text="@string/action_save_details"
+				android:textStyle="bold"/>
+
+		</LinearLayout>
+	</ScrollView>
+</FrameLayout>
