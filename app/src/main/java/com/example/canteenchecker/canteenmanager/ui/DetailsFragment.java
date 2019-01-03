@@ -1,23 +1,27 @@
 package com.example.canteenchecker.canteenmanager.ui;
 
-import android.content.Context;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
+import com.example.canteenchecker.canteenmanager.core.Canteen;
+import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
+
+import java.io.IOException;
 
 public class DetailsFragment extends Fragment {
 
-
+	private static final String TAG = DetailsFragment.class.toString();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,7 +37,39 @@ public class DetailsFragment extends Fragment {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		setValues();
+		loadMyCanteen();
+
+		setViews();
+	}
+
+	private void loadMyCanteen() {
+		new AsyncTask<String, Void, Canteen>() {
+			@Override
+			protected Canteen doInBackground(String... strings) {
+				try {
+					String token = CanteenManagerApplication.getInstance().getAuthenticationToken();
+					return new ServiceProxy().getMyCanteen(token);
+				} catch(IOException e) {
+					Log.e(TAG, "");
+					return null;
+				}
+			}
+
+			//TODO: make this work...
+
+			@Override
+			protected void onPostExecute(Canteen canteen){
+				Log.e(TAG, canteen.toString());
+				if (canteen != null) {
+					EdtCanteenName.setText(canteen.getName());
+					EdtMenuOfTheDay.setText(canteen.getSetMeal());
+					EdtMenuPrice.setText((int) canteen.getSetMealPrice());
+					EdtAddress.setText(canteen.getLocation());
+					EdtWebAddress.setText(canteen.getWebsite());
+					EdtPhone.setText(canteen.getPhoneNumber());
+				}
+			}
+		}.execute();
 	}
 
 	SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -74,7 +110,7 @@ public class DetailsFragment extends Fragment {
 	TextView txtWaitingTime;
 	SeekBar SkbWaitingTime;
 
-	private void setValues() {
+	private void setViews() {
 		CanteenName = "Clemteen";
 		MenuOfTheDay = "Lasagne al forno";
 		MenuPrice = 5.90;
@@ -94,12 +130,6 @@ public class DetailsFragment extends Fragment {
 		SkbWaitingTime.setOnSeekBarChangeListener(seekBarChangeListener);
 		//SkbWaitingTime.setProgress(5);
 
-		EdtCanteenName.setText(CanteenName);
-		EdtMenuOfTheDay.setText(MenuOfTheDay);
-		EdtMenuPrice.setText(MenuPrice.toString());
-		EdtAddress.setText(Address);
-		EdtWebAddress.setText(WebAddress);
-		EdtPhone.setText(Phone);
 
 		int WaitingTime = SkbWaitingTime.getProgress();
 		txtWaitingTime = getView().findViewById(R.id.txtWaitingTime);
