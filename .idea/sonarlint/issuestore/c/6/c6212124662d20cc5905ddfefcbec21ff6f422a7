@@ -1,0 +1,27 @@
+
+osquid:S1450"ZRemove the "CanteenName" field and declare it as a local variable in the relevant methods.(‚óÁ¶
+psquid:S1450"[Remove the "MenuOfTheDay" field and declare it as a local variable in the relevant methods.(ßÈªÿ
+lsquid:S1450"XRemove the "MenuPrice" field and declare it as a local variable in the relevant methods.(½Í¡D
+ksquid:S1450"VRemove the "Address" field and declare it as a local variable in the relevant methods.(÷Ü©
+ssquid:S1450"YRemove the "WebAddress" field and declare it as a local variable in the relevant methods.(’ŠŞÜúÿÿÿÿ
+nsquid:S1450"TRemove the "Phone" field and declare it as a local variable in the relevant methods.(‹¹È§üÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹Çø©ùÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½¾ï
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Î½Ğª
+lsquid:S00116"VRename this field "CanteenName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚óÁ¶
+msquid:S00116"WRename this field "MenuOfTheDay" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßÈªÿ
+isquid:S00116"TRename this field "MenuPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½Í¡D
+hsquid:S00116"RRename this field "Address" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷Ü©
+psquid:S00116"URename this field "WebAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’ŠŞÜúÿÿÿÿ
+ksquid:S00116"PRename this field "Phone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹¹È§üÿÿÿÿ
+tsquid:S00116"YRename this field "EdtCanteenName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ìä§ıÿÿÿÿ
+osquid:S00116"ZRename this field "EdtMenuOfTheDay" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥÷—x
+msquid:S00116"WRename this field "EdtMenuPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÓÃ©
+psquid:S00116"URename this field "EdtAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜¨ªùÿÿÿÿ
+nsquid:S00116"XRename this field "EdtWebAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å¬İŒ
+nsquid:S00116"SRename this field "EdtPhone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(” â¤ıÿÿÿÿ
+tsquid:S00116"YRename this field "SkbWaitingTime" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ¤é¸øÿÿÿÿ
+lsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–À›Ÿúÿÿÿÿ
+Vsquid:UselessImportCheck"4Remove this unused import 'android.content.Context'.(©Ê‰è
+Ssquid:UselessImportCheck",Remove this unused import 'android.net.Uri'.(òêû‘ıÿÿÿÿ
+\squid:UselessImportCheck"5Remove this unused import 'android.widget.ImageView'.(ú¯ëàüÿÿÿÿ

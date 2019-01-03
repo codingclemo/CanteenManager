@@ -1,16 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".ui.CommentsFragment">
 
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerHorizontal="true"
-		android:layout_centerVertical="true"
-		android:text="Comments are here"
-		android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+	<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+		<TextView
+			android:id="@+id/txtReviews"
+			android:layout_margin="@dimen/distance_large"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/reviews"
+			android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+			android:gravity="center_horizontal"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			/>
+
+		<TextView
+			android:id="@+id/txtRating"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/distance_large"
+			android:text="4.3"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+		<LinearLayout
+			android:id="@+id/lnlReviews"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintTop_toBottomOf="@id/txtReviews"
+			app:layout_constraintStart_toStartOf="parent"/>
+
+		<android.support.v4.widget.SwipeRefreshLayout
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_marginTop="@dimen/distance_small"
+			android:id="@+id/srlCanteenReviews"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/lnlReviews">
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/rcvCanteenReviews"
+				android:padding="@dimen/distance_extra_small"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:clipToPadding="false" />
+		</android.support.v4.widget.SwipeRefreshLayout>
+	</android.support.constraint.ConstraintLayout>
 </FrameLayout>

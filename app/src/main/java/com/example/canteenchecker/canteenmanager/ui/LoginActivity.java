@@ -14,12 +14,12 @@ import android.widget.Toast;
 
 import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
+import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
 
 import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 	private static final String TAG = LoginActivity.class.toString();
-	public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
 
 	private EditText edtUserName;
@@ -29,7 +29,9 @@ public class LoginActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_login);
+
 		edtUserName = findViewById(R.id.edtUserName);
 		edtPassWord = findViewById(R.id.edtPassWord);
 		btnLogIn = findViewById(R.id.btnLogIn);
@@ -43,17 +45,13 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 	private void login() {
-		Intent intent = new Intent(this, MainActivity.class);
-		String message = "This is my hidden message to myself clemo";
-		intent.putExtra(EXTRA_MESSAGE, message);
-		startActivity(intent);
-		//TODO: Resolve Firebase and ServiceProxy
-		/*
+
+		setUIEnabled(false);
+
 		new AsyncTask<String, Void, String>() {
 			@Override
 			protected String doInBackground(String... strings) {
 
-				setUIEnabled(false);
 				try {
 					return new ServiceProxy().authenticate(strings[0], strings[1]);
 				} catch (IOException e) {
@@ -73,18 +71,19 @@ public class LoginActivity extends AppCompatActivity {
 				} else {
 					// or not ...
 					edtPassWord.setText(null);
+					setUIEnabled(true);
 					Toast.makeText(LoginActivity.this, R.string.msg_LoginNotSucessfull, Toast.LENGTH_LONG).show();
 				}
-				setUIEnabled(true);
+
 			}
 		}.execute(edtUserName.getText().toString(), edtPassWord.getText().toString());
-		*/
+
 	}
 
 	private void setUIEnabled(boolean enabled) {
 		edtUserName.setEnabled(enabled);
 		edtPassWord.setEnabled(enabled);
-		//btnLogIn.setEnabled(enabled); // throws Exception
+		btnLogIn.setEnabled(enabled);
 	}
 
 }

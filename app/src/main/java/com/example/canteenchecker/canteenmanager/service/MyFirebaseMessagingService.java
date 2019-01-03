@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-//TODO: Firebase
-public class MyFirebaseMessagingService {//extends FirebaseMessagingService {
-/*
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
 	public static IntentFilter canteenChangedIntentFilter() {
 		return new IntentFilter(CANTEEN_CHANGED_INTENT_ACTION);
 	}
@@ -37,5 +38,4 @@ public class MyFirebaseMessagingService {//extends FirebaseMessagingService {
 			LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 		}
 	}
-*/
 }

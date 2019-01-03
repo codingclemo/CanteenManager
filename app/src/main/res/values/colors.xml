@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#008577</color>
-	<color name="colorPrimaryDark">#00574B</color>
-	<color name="colorAccent">#D81B60</color>
+	<color name="colorPrimary">#04b7e9</color>
+	<color name="colorPrimaryDark">#037e9c</color>
+	<color name="colorAccent">#ec7507</color>
+	<color name="ratingsFive">#009900</color>
+	<color name="ratingsFour">#66CC00</color>
+	<color name="ratingsThree">#ccbc11</color>
+	<color name="ratingsTwo">#ff8800</color>
+	<color name="ratingsOne">#ff0400</color>
 </resources>

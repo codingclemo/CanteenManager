@@ -29,4 +29,5 @@
 	<string name="prompt_Website">Website</string>
 	<string name="prompt_Phone">Phone</string>
 	<string name="WaitingTime">Waiting time: </string>
+	<string name="reviews">Reviews</string>
 </resources>
