@@ -74,7 +74,19 @@ public class    ServiceProxy {
 		return r != null ? Integer.toString(r.ratingId) : null;
 	}
 
+	public Canteen getMyCanteen(String authToken) throws IOException {
+		causeDelay(); // for testing only
+		ProxyCanteen canteen = proxy.getMyCanteen(String.format("Bearer %s", authToken)).execute().body();
+		return canteen != null ? canteen.toCanteen() : null;
+	}
+
+
 	private interface Proxy {
+
+		@GET("/Admin/Canteen")
+		Call<ProxyCanteen> getMyCanteen(@Header("Authorization") String authenticationToken);
+
+
 
 		@GET("/Public/Canteen")
 		Call<Collection<ProxyCanteen>> getCanteens(@Query("nameFilter") String filter);

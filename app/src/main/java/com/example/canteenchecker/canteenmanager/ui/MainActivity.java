@@ -12,37 +12,41 @@ import android.widget.TextView;
 
 import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
-
+import com.example.canteenchecker.canteenmanager.core.Canteen;
+import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
 
 public class MainActivity extends AppCompatActivity {
 
 	private TextView mTextMessage;
 	private ActionBar toolbar;
 
+	private static final int LOGIN_FOR_REVIEW_CREATION = 42;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 
-
-		if(CanteenManagerApplication.getInstance().isAuthenticated()) {
-			setContentView(R.layout.activity_main);
-
-			mTextMessage = (TextView) findViewById(R.id.message);
-			BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-			navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-			toolbar = getSupportActionBar();
-
-			toolbar.setTitle(R.string.title_details);
-
-			loadFragment(new DetailsFragment());
-
-		} else {
-			startActivityForResult(LoginActivity.createIntent(getActivity()), LOGIN_FOR_REIVEW_CREATION);
+		if(!CanteenManagerApplication.getInstance().isAuthenticated()) {
+			startActivityForResult(LoginActivity.createIntent(this), LOGIN_FOR_REVIEW_CREATION);
 		}
 
+		setContentView(R.layout.activity_main);
 
+		mTextMessage = (TextView) findViewById(R.id.message);
+		BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+		toolbar = getSupportActionBar();
+
+		toolbar.setTitle(R.string.title_details);
+
+
+		/** trying to get the admins canteen **/
+		String token = CanteenManagerApplication.getInstance().getAuthenticationToken();
+		Canteen myCanteen = ServiceProxy.getMyCanteen(token);
+
+		loadFragment(new DetailsFragment());
 
 	}
 
