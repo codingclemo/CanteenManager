@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,17 +22,27 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 
-		mTextMessage = (TextView) findViewById(R.id.message);
-		BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-		toolbar = getSupportActionBar();
 
-		toolbar.setTitle(R.string.title_details);
+		if(CanteenManagerApplication.getInstance().isAuthenticated()) {
+			setContentView(R.layout.activity_main);
 
-		loadFragment(new DetailsFragment());
+			mTextMessage = (TextView) findViewById(R.id.message);
+			BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+			navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+			toolbar = getSupportActionBar();
+
+			toolbar.setTitle(R.string.title_details);
+
+			loadFragment(new DetailsFragment());
+
+		} else {
+			startActivityForResult(LoginActivity.createIntent(getActivity()), LOGIN_FOR_REIVEW_CREATION);
+		}
+
+
 
 	}
 

@@ -1,6 +1,7 @@
 package com.example.canteenchecker.canteenmanager.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
@@ -21,10 +22,15 @@ import java.io.IOException;
 public class LoginActivity extends AppCompatActivity {
 	private static final String TAG = LoginActivity.class.toString();
 
+	public static Intent createIntent(Context context) {
+		return new Intent(context, LoginActivity.class);
+	}
 
 	private EditText edtUserName;
 	private EditText edtPassWord;
 	private Button btnLogIn;
+
+
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
