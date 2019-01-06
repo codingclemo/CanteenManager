@@ -1,5 +1,7 @@
 package com.example.canteenchecker.canteenmanager.core;
 
+import java.util.Collection;
+
 public class Canteen {
 
 	private final String id;
@@ -11,6 +13,7 @@ public class Canteen {
 	private final float averageRating;
 	private final String location;
 	private final int averageWaitingTime;
+	private Collection<Rating> ratings;
 
 	public Canteen(String id, String name, String phoneNumber, String website, String setMeal, float setMealPrice, float averageRating, String location, int averageWaitingTime) {
 		this.id = id;
@@ -22,6 +25,21 @@ public class Canteen {
 		this.averageRating = averageRating;
 		this.location = location;
 		this.averageWaitingTime = averageWaitingTime;
+		this.ratings = null;
+	}
+
+	public Canteen(String id, String name, String phoneNumber, String website, String setMeal, float setMealPrice, float averageRating,
+	               String location, int averageWaitingTime, Collection<Rating> ratings) {
+		this.id = id;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.website = website;
+		this.setMeal = setMeal;
+		this.setMealPrice = setMealPrice;
+		this.averageRating = averageRating;
+		this.location = location;
+		this.averageWaitingTime = averageWaitingTime;
+		this.ratings = ratings;
 	}
 
 	public String getId() {
@@ -60,4 +78,7 @@ public class Canteen {
 		return averageWaitingTime;
 	}
 
+	public Collection<Rating> getRatings() {
+		return ratings;
+	}
 }

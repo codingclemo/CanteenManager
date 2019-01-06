@@ -1,7 +1,11 @@
 package com.example.canteenchecker.canteenmanager.proxy;
 
+import android.util.Log;
+
 import com.example.canteenchecker.canteenmanager.core.Canteen;
+import com.example.canteenchecker.canteenmanager.core.Rating;
 import com.example.canteenchecker.canteenmanager.core.ReviewData;
+import com.example.canteenchecker.canteenmanager.ui.DetailsFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -24,6 +29,7 @@ public class    ServiceProxy {
 	// SWAGGER --> https://canteenchecker.azurewebsites.net/swagger/ui/index
 	private static final String SERVICE_BASE_URL = "https://canteenchecker.azurewebsites.net/";
 	private static final long ARTIFICIAL_DELAY = 100;
+	private static final String TAG = ServiceProxy.class.toString();
 
 	private final Proxy proxy = new Retrofit.Builder()
 			.baseUrl(SERVICE_BASE_URL)
@@ -80,12 +86,29 @@ public class    ServiceProxy {
 		return canteen != null ? canteen.toCanteen() : null;
 	}
 
-	public String updateCanteen(String authToken, Canteen canteen) throws IOException {
+	public boolean updateCanteen(String authToken, Canteen canteen) throws IOException {
 		causeDelay(); // for testing only
-		ProxyUpdateCanteen c = proxy.postCanteen(String.format("Bearer %s", authToken), new ProxyUpdateCanteen(canteen)).execute().body();
-		return c != null ? c.name : null;
+		return proxy.putCanteen(String.format("Bearer %s", authToken), new ProxyUpdateCanteen(canteen)).execute().isSuccessful();
 	}
 
+	public Collection<Rating> getRatings(String authToken) throws IOException {
+		causeDelay(); // for testing only
+		ProxyCanteenRating canteen = proxy.getMyCanteenRatings(String.format("Bearer %s", authToken)).execute().body();
+
+		Collection<Rating> ratings = null;
+
+		if (canteen != null) {
+			Canteen newCanteen = canteen.toCanteen();
+
+			ratings = newCanteen.getRatings();
+			if (ratings == null) {
+				Log.d(TAG, "getRatings: ratings is NULL");
+				return null;
+			}
+
+		}
+		return ratings;
+	}
 
 	private interface Proxy {
 
@@ -95,8 +118,11 @@ public class    ServiceProxy {
 		@GET("/Admin/Canteen")
 		Call<ProxyCanteen> getMyCanteen(@Header("Authorization") String authenticationToken);
 
-		@POST("/Admin/Canteen")
-		Call<ProxyUpdateCanteen> postCanteen(@Header("Authorization") String authenticationToken, @Body ProxyUpdateCanteen canteen);
+		@GET("/Admin/Canteen")
+		Call<ProxyCanteenRating> getMyCanteenRatings(@Header("Authorization") String authenticationToken);
+
+		@PUT("/Admin/Canteen")
+		Call<ProxyUpdateCanteen> putCanteen(@Header("Authorization") String authenticationToken, @Body ProxyUpdateCanteen canteen);
 
 
 
@@ -113,6 +139,7 @@ public class    ServiceProxy {
 
 		@POST("/Admin/Canteen/Rating")
 		Call<ProxyRating> postRating(@Header("Authorization") String authenticationToken, @Body ProxyNewRating rating);
+
 
 	}
 
@@ -143,7 +170,38 @@ public class    ServiceProxy {
 		Canteen toCanteen() {
 			return new Canteen(String.valueOf(canteenId), name, phone, website, meal, mealPrice, averageRating, address, averageWaitingTime);
 		}
+	}
 
+	private static class ProxyCanteenRating {
+
+		int canteenId;
+		String name;
+		String meal;
+		float mealPrice;
+		String website;
+		String phone;
+		String address;
+		float averageRating;
+		int averageWaitingTime;
+		Collection<Rating> ratings;
+
+		ProxyCanteenRating(Canteen canteen){
+			this.canteenId = Integer.parseInt(canteen.getId());
+			this.name = canteen.getName();
+			this.meal = canteen.getSetMeal();
+			this.mealPrice = canteen.getSetMealPrice();
+			this.website = canteen.getWebsite();
+			this.phone = canteen.getPhoneNumber();
+			this.address = canteen.getLocation();
+			this.averageRating = canteen.getAverageRating();
+			this.averageWaitingTime = canteen.getAverageWaitingTime();
+			this.ratings = canteen.getRatings();
+		}
+
+		Canteen toCanteen() {
+			return new Canteen(String.valueOf(canteenId), name, phone, website, meal, mealPrice, averageRating, address,
+					averageWaitingTime, ratings);
+		}
 	}
 
 	private static class ProxyUpdateCanteen {
@@ -169,9 +227,10 @@ public class    ServiceProxy {
 			this.averageRating = canteen.getAverageRating();
 			this.averageWaitingTime = canteen.getAverageWaitingTime();
 		}
-
 	}
 
+
+/*
 	private static class ProxyRating {
 
 		int ratingId;
@@ -181,6 +240,22 @@ public class    ServiceProxy {
 		//long timestamp;
 
 	}
+*/
+	private static class ProxyRating {
+		int ratingId;
+		String username;
+		String remark;
+		int ratingPoints;
+		long timestamp;
+
+		ProxyRating(int ratingId, String username, String remark, int ratingPoints, long timestamp) {
+			this.ratingId = ratingId;
+			this.username = username;
+			this.remark = remark;
+			this.ratingPoints = ratingPoints;
+			this.timestamp = timestamp;
+		}
+}
 
 	private static class ProxyReviewData {
 

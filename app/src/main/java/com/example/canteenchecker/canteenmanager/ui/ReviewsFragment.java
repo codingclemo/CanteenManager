@@ -1,10 +1,8 @@
-package com.example.canteenchecker.canteenmanager;
+package com.example.canteenchecker.canteenmanager.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,16 +13,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.canteenchecker.canteenmanager.R;
 import com.example.canteenchecker.canteenmanager.core.ReviewData;
 import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
 import com.example.canteenchecker.canteenmanager.service.MyFirebaseMessagingService;
-import com.example.canteenchecker.canteenmanager.ui.LoginActivity;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -67,7 +63,7 @@ public class ReviewsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_reviews, container, false);
-		txvAverageRating = view.findViewById(R.id.txvAverageRating);
+		txvAverageRating = view.findViewById(R.id.txvDate);
 		rtbAverageRating = view.findViewById(R.id.rtbAverageRating);
 		txvTotalRatings = view.findViewById(R.id.txvTotalRatings);
 		viwRatingOne = view.findViewById(R.id.viwRatingsOne);

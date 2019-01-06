@@ -50,25 +50,28 @@ public class DetailsFragment extends Fragment {
 	private void saveChanges() {
 		setUIEnabled(false);
 		Canteen updatedCanteen = getCanteenFromUI();
-		new AsyncTask<Object, Void, String>() {
+		new AsyncTask<Object, Void, Boolean>() {
 			@Override
-			protected String doInBackground(Object... objects) {
+			protected Boolean doInBackground(Object... objects) {
+				Boolean result = new Boolean("True");
 				try {
-					return new ServiceProxy().updateCanteen(
+					result = new ServiceProxy().updateCanteen(
 							(String) objects[0],
 							(Canteen) objects[1]);
+					return result;
 				} catch (IOException e) {
-					return null;
+					Log.d(TAG, "doInBackground: " + e);
+					return result;
 				}
 			}
 
 			@Override
-			protected void onPostExecute(String s) {
+			protected void onPostExecute(Boolean updateSuccessful) {
 				//Toast.makeText(getActivity(), s != null ? getString(R.string.msg_ReviewCreated) : getString(R.string
 						//.msg_ReviewNotCreated), Toast.LENGTH_SHORT).show();
 				setUIEnabled(true);
 				loadMyCanteen();
-				Toast.makeText(getActivity(), s != null ? "Canteen updated":"Update failed", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), updateSuccessful.booleanValue() ? "Canteen updated":"Update failed", Toast.LENGTH_SHORT).show();
 			}
 		}.execute(
 				CanteenManagerApplication.getInstance().getAuthenticationToken(),
@@ -84,8 +87,7 @@ public class DetailsFragment extends Fragment {
 				EdtPhone.getText().toString(),
 				EdtWebAddress.getText().toString(),
 				EdtMenuOfTheDay.getText().toString(),
-				//(float) NumberFormat.getNumberInstance().format(EdtMenuPrice.getText()),
-				Float.parseFloat("3"),
+				Float.parseFloat(EdtMenuPrice.getText().toString()),
 				averageRating,
 				EdtAddress.getText().toString(),
 				SkbWaitingTime.getProgress()
