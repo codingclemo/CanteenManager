@@ -15,10 +15,10 @@
 	<string name="title_home">Home</string>
 	<string name="title_dashboard">Dashboard</string>
 	<string name="title_notifications">Notifications</string>
-	<string name="title_comments">Comments</string>
+	<string name="title_ratings">Ratings</string>
 	<string name="title_details">Details</string>
 
-	<!-- TODO: Remove or change this placeholder text -->
+
 	<string name="hello_blank_fragment">Hello blank fragment</string>
 	<string name="msg_LoginNotSucessfull">Login failed</string>
 	<string name="action_save_details">Save</string>
@@ -29,5 +29,8 @@
 	<string name="prompt_Website">Website</string>
 	<string name="prompt_Phone">Phone</string>
 	<string name="WaitingTime">Waiting time: </string>
-	<string name="reviews">Reviews</string>
+	<string name="ratingSummary">Summary</string>
+	<string name="action_delete_rating">Delete</string>
+
+	<string name="format_date">MM/dd/yyyy</string>
 </resources>

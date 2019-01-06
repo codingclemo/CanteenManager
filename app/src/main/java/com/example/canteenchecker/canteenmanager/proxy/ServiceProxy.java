@@ -90,7 +90,7 @@ public class    ServiceProxy {
 		causeDelay(); // for testing only
 		return proxy.putCanteen(String.format("Bearer %s", authToken), new ProxyUpdateCanteen(canteen)).execute().isSuccessful();
 	}
-
+/*
 	public Collection<Rating> getRatings(String authToken) throws IOException {
 		causeDelay(); // for testing only
 		ProxyCanteenRating canteen = proxy.getMyCanteenRatings(String.format("Bearer %s", authToken)).execute().body();
@@ -109,6 +109,14 @@ public class    ServiceProxy {
 		}
 		return ratings;
 	}
+*/
+
+	public Canteen getRatings(String authToken) throws IOException {
+		causeDelay(); // for testing only
+		ProxyCanteenRating canteen = proxy.getMyCanteenRatings(String.format("Bearer %s", authToken)).execute().body();
+		return canteen != null ? canteen.toCanteen() : null;
+	}
+
 
 	private interface Proxy {
 
@@ -229,18 +237,6 @@ public class    ServiceProxy {
 		}
 	}
 
-
-/*
-	private static class ProxyRating {
-
-		int ratingId;
-		//String username;
-		//String remark;
-		//int ratingPoints;
-		//long timestamp;
-
-	}
-*/
 	private static class ProxyRating {
 		int ratingId;
 		String username;

@@ -17,17 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
 import com.example.canteenchecker.canteenmanager.core.ReviewData;
 import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
 import com.example.canteenchecker.canteenmanager.service.MyFirebaseMessagingService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 
-public class ReviewsFragment extends Fragment {
+public class RatingStatisticsFragment extends Fragment {
 
-	private static final String TAG = ReviewsFragment.class.toString();
+	private static final String TAG = RatingStatisticsFragment.class.toString();
 	private static final String CANTEEN_ID_KEY = "canteenId";
 	private static final int LOGIN_FOR_REIVEW_CREATION = 42;
 
@@ -42,11 +44,11 @@ public class ReviewsFragment extends Fragment {
 	};
 
 	public static Fragment create(String canteenId) {
-		ReviewsFragment reviewsFragment = new ReviewsFragment();
+		RatingStatisticsFragment ratingStatisticsFragment = new RatingStatisticsFragment();
 		Bundle arguments = new Bundle();
 		arguments.putString(CANTEEN_ID_KEY, canteenId);
-		reviewsFragment.setArguments(arguments);
-		return reviewsFragment;
+		ratingStatisticsFragment.setArguments(arguments);
+		return ratingStatisticsFragment;
 	}
 
 
@@ -62,7 +64,7 @@ public class ReviewsFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_reviews, container, false);
+		View view = inflater.inflate(R.layout.fragment_rating_statistics, container, false);
 		txvAverageRating = view.findViewById(R.id.txvDate);
 		rtbAverageRating = view.findViewById(R.id.rtbAverageRating);
 		txvTotalRatings = view.findViewById(R.id.txvTotalRatings);
@@ -95,7 +97,7 @@ public class ReviewsFragment extends Fragment {
 	}
 
 	private String getCanteenId() {
-		return getArguments().getString(CANTEEN_ID_KEY);
+		return CanteenManagerApplication.getInstance().getCanteenId();
 	}
 
 	private void updateReviews() {
@@ -113,7 +115,10 @@ public class ReviewsFragment extends Fragment {
 			@Override
 			protected void onPostExecute(ReviewData reviewData) {
 				if(reviewData != null) {
-					txvAverageRating.setText(NumberFormat.getNumberInstance().format(reviewData.getAverageRating()));
+					Float avg = reviewData.getAverageRating();
+					avg = round(avg, 1);
+					txvAverageRating.setText(Float.toString(avg));
+					//txvAverageRating.setText(NumberFormat.getNumberInstance().format(reviewData.getAverageRating()));
 					txvTotalRatings.setText(NumberFormat.getNumberInstance().format(reviewData.getTotalRatings()));
 					rtbAverageRating.setRating(reviewData.getAverageRating());
 					setWeight(viwRatingOne, reviewData.getRatingsOne(), reviewData.getTotalRatingsOfMostCommonGrade());
@@ -140,49 +145,11 @@ public class ReviewsFragment extends Fragment {
 			}
 		}.execute(getCanteenId());
 	}
-/*
-	private void createReview() {
-		if(CanteenManagerApplication.getInstance().isAuthenticated()) {
-			final View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_add_review, null);
-			new AlertDialog.Builder(getActivity())
-					.setTitle(R.string.dlgAddReview_title)
-					.setView(view)
-					.setPositiveButton(R.string.dlgAddReview_positiveButton, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							new AsyncTask<Object, Void, String>() {
-								@Override
-								protected String doInBackground(Object... objects) {
-									try {
-										return new ServiceProxy().createReview(
-												(String) objects[0],
-												(String) objects[1],
-												(int) objects[2],
-												(String) objects[3]
-										);
-									} catch (IOException e) {
-										return null;
-									}
-								}
 
-								@Override
-								protected void onPostExecute(String s) {
-									Toast.makeText(getActivity(), s != null ? getString(R.string.msg_ReviewCreated) : getString(R.string.msg_ReviewNotCreated), Toast.LENGTH_SHORT).show();
-								}
-							}.execute(
-									CanteenManagerApplication.getInstance().getAuthenticationToken(),
-									getCanteenId(),
-									Math.round(((RatingBar)view.findViewById(R.id.rtbRating)).getRating()),
-									((EditText)view.findViewById(R.id.edtRemark)).getText().toString()
-							);
-						}
-					})
-					.create()
-					.show();
-		} else {
-			startActivityForResult(LoginActivity.createIntent(getActivity()), LOGIN_FOR_REIVEW_CREATION);
-		}
+	public static float round(float d, int decimalPlace) {
+		BigDecimal bd = new BigDecimal(Float.toString(d));
+		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+		return bd.floatValue();
 	}
-*/
+
 }

@@ -24,12 +24,22 @@ public class CanteenManagerApplication extends Application {
 	}
 
 	private String authenticationToken;
+	private String canteenId;
+
 	public synchronized String getAuthenticationToken() {
 		return authenticationToken;
 	}
 
+	public synchronized String getCanteenId() {
+		return canteenId;
+	}
+
 	public synchronized void setAuthenticationToken(String authenticationToken) {
 		this.authenticationToken = authenticationToken;
+	}
+
+	public synchronized void setCanteenId(String canteenId) {
+		this.canteenId = canteenId;
 	}
 
 	public synchronized boolean isAuthenticated() {

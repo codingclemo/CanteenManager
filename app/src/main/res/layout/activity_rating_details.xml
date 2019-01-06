@@ -7,4 +7,53 @@
 	android:layout_height="match_parent"
 	tools:context=".ui.RatingDetailsActivity">
 
+	<RatingBar
+		android:id="@+id/rtbAverageRating"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		style="@style/Widget.AppCompat.RatingBar.Small"
+		android:layout_marginBottom="@dimen/distance_large"
+		android:layout_marginTop="@dimen/distance_large"
+		android:layout_marginLeft="@dimen/distance_large"
+		android:isIndicator="true"
+		android:numStars="5"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/txvDate"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/distance_small"
+		android:layout_marginLeft="@dimen/distance_large"
+		app:layout_constraintBottom_toBottomOf="@id/rtbAverageRating"
+		app:layout_constraintStart_toEndOf="@id/rtbAverageRating"
+		app:layout_constraintTop_toTopOf="@id/rtbAverageRating" />
+
+
+	<TextView
+		android:id="@+id/txvRemark"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/distance_large"
+		app:layout_constraintTop_toBottomOf="@id/rtbAverageRating" />
+
+	<TextView
+		android:id="@+id/txvUserName"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/distance_small"
+		android:layout_marginTop="@dimen/distance_small"
+		android:layout_marginLeft="@dimen/distance_large"
+		app:layout_constraintTop_toBottomOf="@id/txvRemark"/>
+
+	<Button
+		android:id="@+id/btnDelete"
+		style="?android:textAppearanceSmall"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/distance_large"
+		android:text="@string/action_delete_rating"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

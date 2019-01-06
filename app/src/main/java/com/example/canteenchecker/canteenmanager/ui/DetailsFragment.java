@@ -81,6 +81,7 @@ public class DetailsFragment extends Fragment {
 	}
 
 	private Canteen getCanteenFromUI() {
+		Log.d(TAG, "getCanteenFromUI:" + EdtMenuPrice.getText().toString());
 		Canteen canteen = new Canteen(
 				canteenId,
 				EdtCanteenName.getText().toString(),
@@ -92,9 +93,7 @@ public class DetailsFragment extends Fragment {
 				EdtAddress.getText().toString(),
 				SkbWaitingTime.getProgress()
 		);
-		Log.d(TAG, "getCanteenFromUI:" + EdtMenuPrice.getText().toString());
-		return canteen; //Float.parseFloat(EdtMenuPrice.getText().toString()),
-
+		return canteen;
 	}
 
 	public void loadMyCanteen() {
@@ -104,6 +103,7 @@ public class DetailsFragment extends Fragment {
 				try {
 					String token = CanteenManagerApplication.getInstance().getAuthenticationToken();
 					Canteen myCanteen = new ServiceProxy().getMyCanteen(token);
+					CanteenManagerApplication.getInstance().setCanteenId(myCanteen.getId());
 					return myCanteen;
 				} catch (IOException e) {
 					Log.e(TAG, "");

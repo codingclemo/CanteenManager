@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 				if(s != null) {
 					//authentication finished with success ...
 					CanteenManagerApplication.getInstance().setAuthenticationToken(s);
+
 					setResult(Activity.RESULT_OK);
 					//finish();
 					Intent intent = new Intent(LoginActivity.this, MainActivity.class);

@@ -1,7 +1,8 @@
 package com.example.canteenchecker.canteenmanager.core;
 
+import java.io.Serializable;
 
-public class Rating {
+public class Rating implements Serializable {
 
 	private final int ratingId;
 	private final String username;

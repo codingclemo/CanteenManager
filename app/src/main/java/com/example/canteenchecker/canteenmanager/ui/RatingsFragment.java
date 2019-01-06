@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,20 +22,22 @@ import android.widget.TextView;
 
 import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
+import com.example.canteenchecker.canteenmanager.core.Canteen;
 import com.example.canteenchecker.canteenmanager.core.Rating;
 import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
 import com.example.canteenchecker.canteenmanager.service.MyFirebaseMessagingService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class CommentsFragment extends Fragment {
+public class RatingsFragment extends Fragment {
 
-	private static final String TAG = CommentsFragment.class.toString();
+	private static final String TAG = RatingsFragment.class.toString();
 	private final RatingsAdapter ratingsAdapter = new RatingsAdapter();
 	private SwipeRefreshLayout srlRatings;
 	private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -43,11 +46,10 @@ public class CommentsFragment extends Fragment {
 			updateRatings();
 		}
 	};
-	private TextView txtRating;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_comments, null);
+		return inflater.inflate(R.layout.fragment_ratings, null);
 	}
 
 
@@ -61,7 +63,6 @@ public class CommentsFragment extends Fragment {
 		rcvRatings.setLayoutManager(new LinearLayoutManager(thisActivity));
 		rcvRatings.setAdapter(ratingsAdapter);
 
-		txtRating = getView().findViewById(R.id.txtRating);
 		srlRatings = getView().findViewById(R.id.srlCanteenReviews);
 		srlRatings.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
@@ -73,22 +74,29 @@ public class CommentsFragment extends Fragment {
 		LocalBroadcastManager.getInstance(thisActivity).registerReceiver(broadcastReceiver, MyFirebaseMessagingService
 				.canteenChangedIntentFilter());
 
+		insertNestedFragment();
 		updateRatings();
+	}
+
+	private void insertNestedFragment() {
+		Fragment childFragment = new RatingStatisticsFragment();
+		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+		transaction.replace(R.id.child_fragment_reviews, childFragment).commit();
 	}
 
 
 	private void updateRatings() {
 		srlRatings.setRefreshing(true);
 
-		new AsyncTask<Void, Void, Collection<Rating>>() {
+		new AsyncTask<Void, Void, Canteen>() {
 			// läuft asyncron (kein Zugriff auf UI-Thread)
 			@Override
-			protected Collection<Rating> doInBackground(Void... params) {
+			protected Canteen doInBackground(Void... params) {
 				try {
 					String token = CanteenManagerApplication.getInstance().getAuthenticationToken();
 					Log.v(TAG, String.format("Downloading ratings"));
-					Collection<Rating> ratings = new ServiceProxy().getRatings(token);
-					return ratings;
+					Canteen canteen = new ServiceProxy().getRatings(token);
+					return canteen;
 				} catch (IOException e) {
 					Log.e(TAG, String.format("Downloading of ratings failed", e));
 					return null;
@@ -97,13 +105,19 @@ public class CommentsFragment extends Fragment {
 
 			// läuft nach dem die Daten geholt wurden asyncron und werden hier in den UI-Thread geschrieben!
 			@Override
-			protected void onPostExecute(Collection<Rating> ratings) {
+			protected void onPostExecute(Canteen canteen) {
+				Collection<Rating> ratings = canteen.getRatings();
 				ratingsAdapter.displayRatings(ratings);
 				srlRatings.setRefreshing(false);
 			}
 		}.execute();
 	}
 
+	public static float round(float d, int decimalPlace) {
+		BigDecimal bd = new BigDecimal(Float.toString(d));
+		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+		return bd.floatValue();
+	}
 
 	private static class RatingsAdapter extends RecyclerView.Adapter<RatingsAdapter.ViewHolder> {
 		static class ViewHolder extends RecyclerView.ViewHolder {
@@ -137,7 +151,8 @@ public class CommentsFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					Context context = holder.itemView.getContext();
-					context.startActivity(RatingDetailsActivity.createIntent(context, r.getRatingId()));
+					//context.startActivity(RatingDetailsActivity.createIntent(context, r.getRatingId()));
+					context.startActivity(RatingDetailsActivity.createIntent(context, r));
 				}
 			});
 		}

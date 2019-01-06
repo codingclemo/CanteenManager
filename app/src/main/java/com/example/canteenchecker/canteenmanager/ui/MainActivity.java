@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 				fragment = new DetailsFragment();
 				loadFragment(fragment);
 				return true;
-			case R.id.navigation_comments:
-				toolbar.setTitle(R.string.title_comments);
-				fragment = new CommentsFragment();
+			case R.id.navigation_ratings:
+				toolbar.setTitle(R.string.title_ratings);
+				fragment = new RatingsFragment();
 				loadFragment(fragment);
 				return true;
 			}

@@ -4,7 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".ui.CommentsFragment">
+	tools:context=".ui.RatingsFragment">
 
 	<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
@@ -12,34 +12,19 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-		<TextView
-			android:id="@+id/txtReviews"
-			android:layout_margin="@dimen/distance_large"
-			android:layout_width="wrap_content"
+		<FrameLayout
+			android:id="@+id/child_fragment_reviews"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/reviews"
-			android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-			android:gravity="center_horizontal"
-			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			/>
-
-		<TextView
-			android:id="@+id/txtRating"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/distance_large"
-			android:text="4.3"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+			android:layout_margin="@dimen/distance_large"/>
 
 		<LinearLayout
 			android:id="@+id/lnlReviews"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			app:layout_constraintTop_toBottomOf="@id/txtReviews"
+			app:layout_constraintTop_toBottomOf="@id/child_fragment_reviews"
 			app:layout_constraintStart_toStartOf="parent"/>
 
 		<android.support.v4.widget.SwipeRefreshLayout
