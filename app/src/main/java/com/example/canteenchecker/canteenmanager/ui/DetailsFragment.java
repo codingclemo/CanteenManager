@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
@@ -18,58 +20,116 @@ import com.example.canteenchecker.canteenmanager.core.Canteen;
 import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 
 public class DetailsFragment extends Fragment {
 
 	private static final String TAG = DetailsFragment.class.toString();
+	private String canteenId;
+	private float averageRating;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		//just change the fragment_dashboard
-		//with the fragment you want to inflate
-		//like if the class is HomeFragment it should have R.layout.home_fragment
-		//if it is DashboardFragment it should have R.layout.fragment_dashboard
-
 		return inflater.inflate(R.layout.fragment_details, null);
 	}
 
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
-		loadMyCanteen();
-
+		btnSave = getView().findViewById(R.id.btnSaveDetails);
+		btnSave.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				saveChanges();
+			}
+		});
 		setViews();
+		loadMyCanteen();
 	}
 
-	private void loadMyCanteen() {
-		new AsyncTask<String, Void, Canteen>() {
+	private void saveChanges() {
+		setUIEnabled(false);
+		Canteen updatedCanteen = getCanteenFromUI();
+		new AsyncTask<Object, Void, String>() {
 			@Override
-			protected Canteen doInBackground(String... strings) {
+			protected String doInBackground(Object... objects) {
+				try {
+					return new ServiceProxy().updateCanteen(
+							(String) objects[0],
+							(Canteen) objects[1]);
+				} catch (IOException e) {
+					return null;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(String s) {
+				//Toast.makeText(getActivity(), s != null ? getString(R.string.msg_ReviewCreated) : getString(R.string
+						//.msg_ReviewNotCreated), Toast.LENGTH_SHORT).show();
+				setUIEnabled(true);
+				loadMyCanteen();
+				Toast.makeText(getActivity(), s != null ? "Canteen updated":"Update failed", Toast.LENGTH_SHORT).show();
+			}
+		}.execute(
+				CanteenManagerApplication.getInstance().getAuthenticationToken(),
+				updatedCanteen
+				);
+
+	}
+
+	private Canteen getCanteenFromUI() {
+		Canteen canteen = new Canteen(
+				canteenId,
+				EdtCanteenName.getText().toString(),
+				EdtPhone.getText().toString(),
+				EdtWebAddress.getText().toString(),
+				EdtMenuOfTheDay.getText().toString(),
+				//(float) NumberFormat.getNumberInstance().format(EdtMenuPrice.getText()),
+				Float.parseFloat("3"),
+				averageRating,
+				EdtAddress.getText().toString(),
+				SkbWaitingTime.getProgress()
+		);
+		Log.d(TAG, "getCanteenFromUI:" + EdtMenuPrice.getText().toString());
+		return canteen; //Float.parseFloat(EdtMenuPrice.getText().toString()),
+
+	}
+
+	public void loadMyCanteen() {
+		new AsyncTask<Void, Void, Canteen>() {
+			@Override
+			protected Canteen doInBackground(Void... params) {
 				try {
 					String token = CanteenManagerApplication.getInstance().getAuthenticationToken();
-					return new ServiceProxy().getMyCanteen(token);
-				} catch(IOException e) {
+					Canteen myCanteen = new ServiceProxy().getMyCanteen(token);
+					return myCanteen;
+				} catch (IOException e) {
 					Log.e(TAG, "");
 					return null;
 				}
 			}
 
-			//TODO: make this work...
-
 			@Override
-			protected void onPostExecute(Canteen canteen){
-				Log.e(TAG, canteen.toString());
-				if (canteen != null) {
-					EdtCanteenName.setText(canteen.getName());
-					EdtMenuOfTheDay.setText(canteen.getSetMeal());
-					EdtMenuPrice.setText((int) canteen.getSetMealPrice());
-					EdtAddress.setText(canteen.getLocation());
-					EdtWebAddress.setText(canteen.getWebsite());
-					EdtPhone.setText(canteen.getPhoneNumber());
-				}
+			protected void onPostExecute(Canteen canteen) {
+				updateValues(canteen);
 			}
 		}.execute();
+	}
+
+	private void updateValues(Canteen canteen) {
+		if (canteen != null) {
+			canteenId = canteen.getId();
+			averageRating = canteen.getAverageRating();
+			EdtCanteenName.setText(canteen.getName());
+			EdtMenuOfTheDay.setText(canteen.getSetMeal());
+			EdtMenuPrice.setText(NumberFormat.getNumberInstance().format(canteen.getSetMealPrice()));
+			EdtAddress.setText(canteen.getLocation());
+			EdtWebAddress.setText(canteen.getWebsite());
+			EdtPhone.setText(canteen.getPhoneNumber());
+			int waitingTime = canteen.getAverageWaitingTime();
+			SkbWaitingTime.setProgress(waitingTime);
+			txtWaitingTime.setText(getResources().getString(R.string.WaitingTime) + " " + waitingTime);
+		}
 	}
 
 	SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -92,15 +152,6 @@ public class DetailsFragment extends Fragment {
 	};
 
 
-	private String CanteenName;
-	private String MenuOfTheDay;
-	private Double MenuPrice;
-	private String Address;
-	private String WebAddress;
-	private String Phone;
-	//private int WaitingTime;
-
-
 	EditText EdtCanteenName;
 	EditText EdtMenuOfTheDay;
 	EditText EdtMenuPrice;
@@ -109,17 +160,9 @@ public class DetailsFragment extends Fragment {
 	EditText EdtPhone;
 	TextView txtWaitingTime;
 	SeekBar SkbWaitingTime;
+	Button btnSave;
 
 	private void setViews() {
-		CanteenName = "Clemteen";
-		MenuOfTheDay = "Lasagne al forno";
-		MenuPrice = 5.90;
-		Address = "Im Kreuzlandl 11, 4020 Linz";
-		WebAddress = "www.sammereyer.com/clemens";
-		Phone = "246234215";
-		//WaitingTime = 5;
-
-
 		EdtCanteenName = getView().findViewById(R.id.edtCanteenName);
 		EdtMenuOfTheDay = getView().findViewById(R.id.edtDailyMenu);
 		EdtMenuPrice = getView().findViewById(R.id.edtMenuPrice);
@@ -128,11 +171,17 @@ public class DetailsFragment extends Fragment {
 		EdtPhone = getView().findViewById(R.id.edtPhone);
 		SkbWaitingTime = getView().findViewById(R.id.skbWaitingTime);
 		SkbWaitingTime.setOnSeekBarChangeListener(seekBarChangeListener);
-		//SkbWaitingTime.setProgress(5);
-
-
-		int WaitingTime = SkbWaitingTime.getProgress();
 		txtWaitingTime = getView().findViewById(R.id.txtWaitingTime);
-		txtWaitingTime.setText(getResources().getString(R.string.WaitingTime) + " " + WaitingTime);
+	}
+
+	private void setUIEnabled(boolean enabled) {
+		EdtCanteenName.setEnabled(enabled);
+		EdtMenuOfTheDay.setEnabled(enabled);
+		EdtMenuPrice.setEnabled(enabled);
+		EdtAddress.setEnabled(enabled);
+		EdtWebAddress.setEnabled(enabled);
+		EdtPhone.setEnabled(enabled);
+		SkbWaitingTime.setEnabled(enabled);
+		SkbWaitingTime.setEnabled(enabled);
 	}
 }

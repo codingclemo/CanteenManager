@@ -1,7 +1,7 @@
 
-isquid:CommentedOutCodeLinev"<This block of commented-out lines of code should be removed.(ûæ§¨8¥»’-
-osquid:CommentedOutCodeLine€"<This block of commented-out lines of code should be removed.(—¥Âªûÿÿÿÿ8¥»’-
-jsquid:CommentedOutCodeLine‚"<This block of commented-out lines of code should be removed.(Öðëý8¥»’-
-isquid:S2142%"FEither re-interrupt this method or rethrow the "InterruptedException".(®ûºöÿÿÿÿÿ8¥»’-
-Isquid:S1168-"+Return an empty collection instead of null.(¥¹ï8¥»’-
-Msquid:S00108%")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8¥»’-
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ûæ§¨8¥»’-
+Ksquid:S00108")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8¥»’-
+Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8¥»’-
+gsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(®ûºöÿÿÿÿÿ8¥»’-
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(—¥Âªûÿÿÿÿ8¥»’-
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Öðëý8Õ÷òË-

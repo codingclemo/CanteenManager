@@ -22,32 +22,35 @@ import java.io.IOException;
 public class LoginActivity extends AppCompatActivity {
 	private static final String TAG = LoginActivity.class.toString();
 
-	public static Intent createIntent(Context context) {
-		return new Intent(context, LoginActivity.class);
-	}
-
 	private EditText edtUserName;
 	private EditText edtPassWord;
 	private Button btnLogIn;
 
+	private static final int LOGIN_FOR_REVIEW_CREATION = 42;
 
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_login);
 
-		edtUserName = findViewById(R.id.edtUserName);
-		edtPassWord = findViewById(R.id.edtPassWord);
-		btnLogIn = findViewById(R.id.btnLogIn);
 
-		btnLogIn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				login();
-			}
-		});
+		if(CanteenManagerApplication.getInstance().isAuthenticated()) {
+			startActivityForResult(MainActivity.createIntent(this), LOGIN_FOR_REVIEW_CREATION);
+		} else {
+			setContentView(R.layout.activity_login);
+
+			edtUserName = findViewById(R.id.edtUserName);
+			edtPassWord = findViewById(R.id.edtPassWord);
+			btnLogIn = findViewById(R.id.btnLogIn);
+
+			btnLogIn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					login();
+				}
+			});
+		}
 	}
 
 	private void login() {
@@ -73,7 +76,10 @@ public class LoginActivity extends AppCompatActivity {
 					//authentication finished with success ...
 					CanteenManagerApplication.getInstance().setAuthenticationToken(s);
 					setResult(Activity.RESULT_OK);
-					finish();
+					//finish();
+					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+					startActivity(intent);
+
 				} else {
 					// or not ...
 					edtPassWord.setText(null);

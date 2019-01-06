@@ -35,3 +35,5 @@ capp/src/main/java/com/example/canteenchecker/canteenmanager/service/MyFirebaseM
 Qapp/src/main/java/com/example/canteenchecker/canteenmanager/ui/LoginActivity.java,9/3/9309b8a7de7493359dff77b51bab9a06e6ed2d9d
 €
 Papp/src/main/java/com/example/canteenchecker/canteenmanager/ReviewsFragment.java,9/2/92298219468fe7b217ba402043e1ca571ae507e5
+€
+Papp/src/main/java/com/example/canteenchecker/canteenmanager/ui/MainActivity.java,d/1/d19d9b0b48982398bad67ec4d3971cfcef471df5

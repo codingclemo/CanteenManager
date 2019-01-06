@@ -1,5 +1,7 @@
 package com.example.canteenchecker.canteenmanager.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,32 +26,29 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
 	private static final String TAG = MainActivity.class.toString();
-
 	private TextView mTextMessage;
 	private ActionBar toolbar;
 
-	private static final int LOGIN_FOR_REVIEW_CREATION = 42;
+
+	public static Intent createIntent(Context context) {
+		return new Intent(context, MainActivity.class);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+			setContentView(R.layout.activity_main);
 
-		if(!CanteenManagerApplication.getInstance().isAuthenticated()) {
-			startActivityForResult(LoginActivity.createIntent(this), LOGIN_FOR_REVIEW_CREATION);
-		}
+			mTextMessage = (TextView) findViewById(R.id.message);
+			BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+			navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-		setContentView(R.layout.activity_main);
+			toolbar = getSupportActionBar();
 
-		mTextMessage = (TextView) findViewById(R.id.message);
-		BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+			toolbar.setTitle(R.string.title_details);
 
-		toolbar = getSupportActionBar();
-
-		toolbar.setTitle(R.string.title_details);
-
-		loadFragment(new DetailsFragment());
+			loadFragment(new DetailsFragment());
 
 	}
 
