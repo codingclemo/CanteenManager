@@ -30,8 +30,6 @@ import java.text.NumberFormat;
 public class RatingStatisticsFragment extends Fragment {
 
 	private static final String TAG = RatingStatisticsFragment.class.toString();
-	private static final String CANTEEN_ID_KEY = "canteenId";
-	private static final int LOGIN_FOR_REIVEW_CREATION = 42;
 
 	private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 		@Override
@@ -42,15 +40,6 @@ public class RatingStatisticsFragment extends Fragment {
 			}
 		}
 	};
-
-	public static Fragment create(String canteenId) {
-		RatingStatisticsFragment ratingStatisticsFragment = new RatingStatisticsFragment();
-		Bundle arguments = new Bundle();
-		arguments.putString(CANTEEN_ID_KEY, canteenId);
-		ratingStatisticsFragment.setArguments(arguments);
-		return ratingStatisticsFragment;
-	}
-
 
 	private TextView txvAverageRating;
 	private RatingBar rtbAverageRating;
@@ -89,17 +78,12 @@ public class RatingStatisticsFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-
 		LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
-		if(requestCode == LOGIN_FOR_REIVEW_CREATION && resultCode == Activity.RESULT_OK) {
-			//createReview();
-		}
 	}
 
 	private String getCanteenId() {
@@ -124,7 +108,6 @@ public class RatingStatisticsFragment extends Fragment {
 					Float avg = reviewData.getAverageRating();
 					avg = round(avg, 1);
 					txvAverageRating.setText(Float.toString(avg));
-					//txvAverageRating.setText(NumberFormat.getNumberInstance().format(reviewData.getAverageRating()));
 					txvTotalRatings.setText(NumberFormat.getNumberInstance().format(reviewData.getTotalRatings()));
 					rtbAverageRating.setRating(reviewData.getAverageRating());
 					setWeight(viwRatingOne, reviewData.getRatingsOne(), reviewData.getTotalRatingsOfMostCommonGrade());

@@ -79,7 +79,6 @@ public class RatingDetailsActivity extends AppCompatActivity {
 			protected Boolean doInBackground(Integer... id) {
 
 				try {
-					//return new ServiceProxy().authenticate(strings[0], strings[1]);
 					String token = CanteenManagerApplication.getInstance().getAuthenticationToken();
 					return Boolean.valueOf(new ServiceProxy().deleteRating(token, id[0]));
 				} catch (IOException e) {

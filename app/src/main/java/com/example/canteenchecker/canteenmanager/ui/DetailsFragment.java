@@ -101,8 +101,6 @@ public class DetailsFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(Boolean updateSuccessful) {
-				//Toast.makeText(getActivity(), s != null ? getString(R.string.msg_ReviewCreated) : getString(R.string
-						//.msg_ReviewNotCreated), Toast.LENGTH_SHORT).show();
 				setUIEnabled(true);
 				loadMyCanteen();
 				Toast.makeText(getActivity(), updateSuccessful.booleanValue() ? "Canteen updated":"Update failed", Toast.LENGTH_SHORT).show();
