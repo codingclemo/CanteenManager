@@ -84,6 +84,11 @@ public class RatingsFragment extends Fragment {
 		transaction.replace(R.id.child_fragment_reviews, childFragment).commit();
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateRatings();
+	}
 
 	private void updateRatings() {
 		srlRatings.setRefreshing(true);
@@ -111,12 +116,6 @@ public class RatingsFragment extends Fragment {
 				srlRatings.setRefreshing(false);
 			}
 		}.execute();
-	}
-
-	public static float round(float d, int decimalPlace) {
-		BigDecimal bd = new BigDecimal(Float.toString(d));
-		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-		return bd.floatValue();
 	}
 
 	private static class RatingsAdapter extends RecyclerView.Adapter<RatingsAdapter.ViewHolder> {
@@ -151,13 +150,11 @@ public class RatingsFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					Context context = holder.itemView.getContext();
-					//context.startActivity(RatingDetailsActivity.createIntent(context, r.getRatingId()));
 					context.startActivity(RatingDetailsActivity.createIntent(context, r));
 				}
 			});
 		}
 
-		//private final List<Canteen> canteenList = new ArrayList<>();
 		private final List<Rating> ratingList = new ArrayList<>();
 
 		void displayRatings(Collection<Rating> ratings) {

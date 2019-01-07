@@ -1,31 +1,10 @@
 
-xsquid:S1450c"ZRemove the "CanteenName" field and declare it as a local variable in the relevant methods.(‚óÁ¶8ƒ¿ÿÌ-
-usquid:S00116c"VRename this field "CanteenName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚óÁ¶8ƒ¿ÿÌ-
-Lsquid:S1068h")Remove this unused "Phone" private field.(‹¹È§üÿÿÿÿ8ƒ¿ÿÌ-
-|squid:S1450g"YRemove the "WebAddress" field and declare it as a local variable in the relevant methods.(’ŠŞÜúÿÿÿÿ8ƒ¿ÿÌ-
-Qsquid:S1068g".Remove this unused "WebAddress" private field.(’ŠŞÜúÿÿÿÿ8ƒ¿ÿÌ-
-vsquid:S00117Š"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–À›Ÿúÿÿÿÿ8ƒ¿ÿÌ-
-ysquid:S1450d"[Remove the "MenuOfTheDay" field and declare it as a local variable in the relevant methods.(ßÈªÿ8ƒ¿ÿÌ-
-usquid:S1450e"XRemove the "MenuPrice" field and declare it as a local variable in the relevant methods.(½Í¡D8ƒ¿ÿÌ-
-nsquid:CommentedOutCodeLinei"<This block of commented-out lines of code should be removed.(‹Çø©ùÿÿÿÿ8ƒ¿ÿÌ-
-ysquid:S00116o"URename this field "EdtAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜¨ªùÿÿÿÿ8ƒ¿ÿÌ-
-}squid:S00116l"YRename this field "EdtCanteenName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ìä§ıÿÿÿÿ8ƒ¿ÿÌ-
-tsquid:S1450f"VRemove the "Address" field and declare it as a local variable in the relevant methods.(÷Ü©8ƒ¿ÿÌ-
-jsquid:CommentedOutCodeLine‡"<This block of commented-out lines of code should be removed.(Î½Ğª8ƒ¿ÿÌ-
-rsquid:S00116e"TRename this field "MenuPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½Í¡D8ƒ¿ÿÌ-
-}squid:S00116s"YRename this field "SkbWaitingTime" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ¤é¸øÿÿÿÿ8ƒ¿ÿÌ-
-„squid:S14882"aImmediately return this expression instead of assigning it to the temporary variable "myCanteen".(ƒœ’ìıÿÿÿÿ8‡ùƒÍ-
-wsquid:S1450h"TRemove the "Phone" field and declare it as a local variable in the relevant methods.(‹¹È§üÿÿÿÿ8ƒ¿ÿÌ-
-Isquid:S1068f"+Remove this unused "Address" private field.(÷Ü©8ƒ¿ÿÌ-
-wsquid:S00116p"XRename this field "EdtWebAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å¬İŒ8ƒ¿ÿÌ-
-isquid:CommentedOutCodeLine|"<This block of commented-out lines of code should be removed.(½¾ï8ƒ¿ÿÌ-
-tsquid:S00116h"PRename this field "Phone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹¹È§üÿÿÿÿ8ƒ¿ÿÌ-
-vsquid:S00116d"WRename this field "MenuOfTheDay" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßÈªÿ8ƒ¿ÿÌ-
-vsquid:S00116n"WRename this field "EdtMenuPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÓÃ©8ƒ¿ÿÌ-
-Nsquid:S1068d"0Remove this unused "MenuOfTheDay" private field.(ßÈªÿ8ƒ¿ÿÌ-
-wsquid:S00116q"SRename this field "EdtPhone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(” â¤ıÿÿÿÿ8ƒ¿ÿÌ-
-ysquid:S00116g"URename this field "WebAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’ŠŞÜúÿÿÿÿ8ƒ¿ÿÌ-
-Jsquid:S1068e"-Remove this unused "MenuPrice" private field.(½Í¡D8ƒ¿ÿÌ-
-qsquid:S00116f"RRename this field "Address" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷Ü©8ƒ¿ÿÌ-
-Msquid:S1068c"/Remove this unused "CanteenName" private field.(‚óÁ¶8ƒ¿ÿÌ-
-xsquid:S00116m"ZRename this field "EdtMenuOfTheDay" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥÷—x8ƒ¿ÿÌ-
+ysquid:S00116"ZRename this field "EdtMenuOfTheDay" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥÷—x8¤Ê®œ‚-
+xsquid:S00116¡"XRename this field "EdtWebAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å¬İŒ8¤Ê®œ‚-
+wsquid:S00116Ÿ"WRename this field "EdtMenuPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÓÃ©8¤Ê®œ‚-
+}squid:S1488U"_Immediately return this expression instead of assigning it to the temporary variable "canteen".(Ê¦ƒÊ8¤Ê®œ‚-
+~squid:S00116¤"YRename this field "SkbWaitingTime" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ¤é¸øÿÿÿÿ8¤Ê®œ‚-
+~squid:S00116"YRename this field "EdtCanteenName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ìä§ıÿÿÿÿ8¤Ê®œ‚-
+xsquid:S00116¢"SRename this field "EdtPhone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(” â¤ıÿÿÿÿ8¤Ê®œ‚-
+nsquid:CommentedOutCodeLineG"<This block of commented-out lines of code should be removed.(¼š±¡øÿÿÿÿ8¤Ê®œ‚-
+zsquid:S00116 "URename this field "EdtAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜¨ªùÿÿÿÿ8¤Ê®œ‚-

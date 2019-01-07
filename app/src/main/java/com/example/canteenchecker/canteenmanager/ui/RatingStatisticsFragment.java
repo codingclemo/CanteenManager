@@ -81,6 +81,12 @@ public class RatingStatisticsFragment extends Fragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		updateReviews();
+	}
+
+	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 

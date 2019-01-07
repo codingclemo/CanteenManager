@@ -1,0 +1,9 @@
+
+†squid:S1845"cRename field "rating" to prevent any misunderstanding/clash with field "RATING" defined on line 29.(ğ¢İ¥ÿÿÿÿÿ8†ò¸¡‚-
+csquid:UselessImportCheck"3Remove this unused import 'android.graphics.Movie'.(ÃøÆ‰ùÿÿÿÿ8†ò¸¡‚-
+Ksquid:S2447U"-Null is returned but a "Boolean" is expected.(¥¹ï8è…©‚-
+\squid:UselessImportCheck"1Remove this unused import 'android.app.Activity'.(‡ÊÍÆ8Ûˆ©‚-
+nsquid:CommentedOutCodeLineP"<This block of commented-out lines of code should be removed.(µ ëóûÿÿÿÿ8è…©‚-
+Osquid:S1068"1Remove this unused "RATING_ID_KEY" private field.(´‚çŠ8†ò¸¡‚-
+Ssquid:S26962"6Make the enclosing method "static" or remove this set.(óƒ¬>8ø»¹¡‚-
+Usquid:S1135Z"2Complete the task associated to this TODO comment.(†ã£Éşÿÿÿÿ8ì‹©‚-

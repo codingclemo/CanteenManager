@@ -11,10 +11,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -44,40 +46,9 @@ public class    ServiceProxy {
 		}
 	}
 
-	public Collection<Canteen> getCanteens(String filter) throws IOException {
-		causeDelay(); // for testing only
-		Collection<ProxyCanteen> canteens = proxy.getCanteens(filter).execute().body();
-		if (canteens == null) {
-			return null;
-		}
-		Collection<Canteen> result = new ArrayList<>(canteens.size());
-		for (ProxyCanteen canteen : canteens) {
-			result.add(canteen.toCanteen());
-		}
-		return result;
-	}
-
-	public Canteen getCanteen(String canteenId) throws IOException {
-		causeDelay(); // for testing only
-		ProxyCanteen canteen = proxy.getCanteen(canteenId).execute().body();
-		return canteen != null ? canteen.toCanteen() : null;
-	}
-
-	public ReviewData getReviewsDataForCanteen(String canteenId) throws IOException {
-		causeDelay(); // for testing only
-		ProxyReviewData reviewData = proxy.getReviewDataForCanteen(canteenId).execute().body();
-		return reviewData != null ? reviewData.toReviewData() : null;
-	}
-
 	public String authenticate(String userName, String password) throws IOException {
 		causeDelay(); // for testing only
 		return proxy.postLogin(new ProxyLogin(userName, password)).execute().body();
-	}
-
-	public String createReview(String authToken, String canteenId, int rating, String remark) throws IOException {
-		causeDelay(); // for testing only
-		ProxyRating r = proxy.postRating(String.format("Bearer %s", authToken), new ProxyNewRating(canteenId, remark, rating)).execute().body();
-		return r != null ? Integer.toString(r.ratingId) : null;
 	}
 
 	public Canteen getMyCanteen(String authToken) throws IOException {
@@ -90,26 +61,6 @@ public class    ServiceProxy {
 		causeDelay(); // for testing only
 		return proxy.putCanteen(String.format("Bearer %s", authToken), new ProxyUpdateCanteen(canteen)).execute().isSuccessful();
 	}
-/*
-	public Collection<Rating> getRatings(String authToken) throws IOException {
-		causeDelay(); // for testing only
-		ProxyCanteenRating canteen = proxy.getMyCanteenRatings(String.format("Bearer %s", authToken)).execute().body();
-
-		Collection<Rating> ratings = null;
-
-		if (canteen != null) {
-			Canteen newCanteen = canteen.toCanteen();
-
-			ratings = newCanteen.getRatings();
-			if (ratings == null) {
-				Log.d(TAG, "getRatings: ratings is NULL");
-				return null;
-			}
-
-		}
-		return ratings;
-	}
-*/
 
 	public Canteen getRatings(String authToken) throws IOException {
 		causeDelay(); // for testing only
@@ -117,6 +68,16 @@ public class    ServiceProxy {
 		return canteen != null ? canteen.toCanteen() : null;
 	}
 
+	public ReviewData getReviewsDataForCanteen(String canteenId) throws IOException {
+		causeDelay(); // for testing only
+		ProxyReviewData reviewData = proxy.getReviewDataForCanteen(canteenId).execute().body();
+		return reviewData != null ? reviewData.toReviewData() : null;
+	}
+
+	public boolean deleteRating(String authToken, int ratingId) throws IOException {
+		causeDelay(); // for testing only
+		return proxy.deleteRating(String.format("Bearer %s", authToken), ratingId).execute().isSuccessful();
+	}
 
 	private interface Proxy {
 
@@ -132,22 +93,11 @@ public class    ServiceProxy {
 		@PUT("/Admin/Canteen")
 		Call<ProxyUpdateCanteen> putCanteen(@Header("Authorization") String authenticationToken, @Body ProxyUpdateCanteen canteen);
 
-
-
-		@GET("/Public/Canteen")
-		Call<Collection<ProxyCanteen>> getCanteens(@Query("nameFilter") String filter);
-
-		@GET("/Public/Canteen/{id}")
-		Call<ProxyCanteen> getCanteen(@Path("id") String canteenId);
+		@DELETE("/Admin/Canteen/Rating/{id}")
+		Call<ResponseBody> deleteRating(@Header("Authorization") String authenticationToken, @Path("id") int ratingId);
 
 		@GET("/Public/Canteen/{id}/Rating?nrOfRatings=0")
 		Call<ProxyReviewData> getReviewDataForCanteen(@Path("id") String canteenId);
-
-
-
-		@POST("/Admin/Canteen/Rating")
-		Call<ProxyRating> postRating(@Header("Authorization") String authenticationToken, @Body ProxyNewRating rating);
-
 
 	}
 
@@ -237,21 +187,17 @@ public class    ServiceProxy {
 		}
 	}
 
-	private static class ProxyRating {
-		int ratingId;
-		String username;
-		String remark;
-		int ratingPoints;
-		long timestamp;
+	private static class ProxyLogin {
 
-		ProxyRating(int ratingId, String username, String remark, int ratingPoints, long timestamp) {
-			this.ratingId = ratingId;
-			this.username = username;
-			this.remark = remark;
-			this.ratingPoints = ratingPoints;
-			this.timestamp = timestamp;
+		final String username;
+		final String password;
+
+		ProxyLogin(String userName, String password) {
+			this.username = userName;
+			this.password = password;
 		}
-}
+
+	}
 
 	private static class ProxyReviewData {
 
@@ -268,32 +214,6 @@ public class    ServiceProxy {
 
 		ReviewData toReviewData() {
 			return new ReviewData(average, totalCount, getRatingsForGrade(1), getRatingsForGrade(2), getRatingsForGrade(3), getRatingsForGrade(4), getRatingsForGrade(5));
-		}
-
-	}
-
-	private static class ProxyLogin {
-
-		final String username;
-		final String password;
-
-		ProxyLogin(String userName, String password) {
-			this.username = userName;
-			this.password = password;
-		}
-
-	}
-
-	private static class ProxyNewRating {
-
-		final int canteenId;
-		final String remark;
-		final int ratingPoints;
-
-		ProxyNewRating(String canteenId, String remark, int ratingPoints) {
-			this.canteenId = Integer.parseInt(canteenId);
-			this.remark = remark;
-			this.ratingPoints = ratingPoints;
 		}
 
 	}

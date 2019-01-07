@@ -1,30 +1,50 @@
 package com.example.canteenchecker.canteenmanager.ui;
 
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.canteenchecker.canteenmanager.CanteenManagerApplication;
 import com.example.canteenchecker.canteenmanager.R;
 import com.example.canteenchecker.canteenmanager.core.Canteen;
 import com.example.canteenchecker.canteenmanager.proxy.ServiceProxy;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DetailsFragment extends Fragment {
 
 	private static final String TAG = DetailsFragment.class.toString();
+	private static final int DEFAULTMAP_ZOOM_FACTOR = 17;
 	private String canteenId;
 	private float averageRating;
 
@@ -36,15 +56,29 @@ public class DetailsFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		btnSave = getView().findViewById(R.id.btnSaveDetails);
+		setViews();
 		btnSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				saveChanges();
 			}
 		});
-		setViews();
+		btnWebsite.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				openLink();
+			}
+		});
+
 		loadMyCanteen();
+	}
+
+	private void openLink() {
+		String url = EdtWebAddress.getText().toString();
+		url = url.replace("http://", "");
+		Uri uri = Uri.parse("http://" + url); // missing 'http://' will cause crashed
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+		startActivity(intent);
 	}
 
 	private void saveChanges() {
@@ -131,7 +165,47 @@ public class DetailsFragment extends Fragment {
 			int waitingTime = canteen.getAverageWaitingTime();
 			SkbWaitingTime.setProgress(waitingTime);
 			txtWaitingTime.setText(getResources().getString(R.string.WaitingTime) + " " + waitingTime);
+			updateMap(canteen.getLocation());
+
 		}
+	}
+
+	private void updateMap(String location) {
+		new AsyncTask<String, Void, LatLng>() {
+			@Override
+			protected LatLng doInBackground(String... strings) {
+				LatLng location = null;
+				Geocoder geocoder = new Geocoder(getActivity());
+				try {
+					List<Address> addresses = geocoder.getFromLocationName(strings[0], 1);
+					if(addresses != null && addresses.size() > 0) {
+						Address address = addresses.get(0);
+						location = new LatLng(address.getLatitude(), address.getLongitude());
+					} else {
+						Log.w(TAG, "Resolving failed!");
+					}
+				} catch (IOException e) {
+					Log.w(TAG, "Resolving of Adress failed.");
+				}
+				return location;
+			}
+
+			@Override
+			protected void onPostExecute(final LatLng latLng) {
+				mpfMap.getMapAsync(new OnMapReadyCallback() {
+					@Override
+					public void onMapReady(GoogleMap googleMap) {
+						googleMap.clear();
+						if(latLng != null) {
+							googleMap.addMarker(new MarkerOptions().position(latLng));
+							googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULTMAP_ZOOM_FACTOR));
+						} else {
+							googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(0, 0), 0));
+						}
+					}
+				});
+			}
+		}.execute(location);
 	}
 
 	SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -154,15 +228,17 @@ public class DetailsFragment extends Fragment {
 	};
 
 
-	EditText EdtCanteenName;
-	EditText EdtMenuOfTheDay;
-	EditText EdtMenuPrice;
-	EditText EdtAddress;
-	EditText EdtWebAddress;
-	EditText EdtPhone;
-	TextView txtWaitingTime;
-	SeekBar SkbWaitingTime;
-	Button btnSave;
+	private EditText EdtCanteenName;
+	private EditText EdtMenuOfTheDay;
+	private EditText EdtMenuPrice;
+	private EditText EdtAddress;
+	private EditText EdtWebAddress;
+	private EditText EdtPhone;
+	private TextView txtWaitingTime;
+	private SeekBar SkbWaitingTime;
+	private ImageButton btnWebsite;
+	private Button btnSave;
+	private SupportMapFragment mpfMap;
 
 	private void setViews() {
 		EdtCanteenName = getView().findViewById(R.id.edtCanteenName);
@@ -174,6 +250,56 @@ public class DetailsFragment extends Fragment {
 		SkbWaitingTime = getView().findViewById(R.id.skbWaitingTime);
 		SkbWaitingTime.setOnSeekBarChangeListener(seekBarChangeListener);
 		txtWaitingTime = getView().findViewById(R.id.txtWaitingTime);
+		btnSave = getView().findViewById(R.id.btnSaveDetails);
+		btnWebsite = getView().findViewById(R.id.btnWebsite);
+
+		FragmentManager fm = getChildFragmentManager();
+		mpfMap = (SupportMapFragment) fm.findFragmentById(R.id.mpfMap);
+		mpfMap.getMapAsync(new OnMapReadyCallback() {
+			@Override
+			public void onMapReady(GoogleMap googleMap) {
+				UiSettings uiSettings = googleMap.getUiSettings();
+				uiSettings.setAllGesturesEnabled(false);
+				uiSettings.setZoomControlsEnabled(true);
+			}
+		});
+
+		EdtAddress.addTextChangedListener(new TextWatcher() {
+
+			private Timer timer = new Timer();
+
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int
+					count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+			                          int count) {
+			}
+
+			@Override
+			public void afterTextChanged(final Editable s) {
+				timer.cancel();
+				timer = new Timer();
+				int sleep = 350;
+				if (s.length() == 1)
+					sleep = 1000;
+				else if (s.length() <= 3)
+					sleep = 700;
+				else if (s.length() <= 5)
+					sleep = 500;
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						updateMap(s.toString());
+					}
+				}, sleep);
+			}
+		});
+
 	}
 
 	private void setUIEnabled(boolean enabled) {
@@ -185,5 +311,7 @@ public class DetailsFragment extends Fragment {
 		EdtPhone.setEnabled(enabled);
 		SkbWaitingTime.setEnabled(enabled);
 		SkbWaitingTime.setEnabled(enabled);
+		btnWebsite.setEnabled(enabled);
+		btnSave.setEnabled(enabled);
 	}
 }

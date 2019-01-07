@@ -33,4 +33,8 @@
 	<string name="action_delete_rating">Delete</string>
 
 	<string name="format_date">MM/dd/yyyy</string>
+	<string name="title_rating_details">Rating details</string>
+	<string name="msg_CanteenNotAvailable">Could not load canteen</string>
+	<string name="title_activity_maps">Map</string>
+	<string name="web">W</string>
 </resources>

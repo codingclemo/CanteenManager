@@ -3,6 +3,7 @@
 	<color name="colorPrimary">#04b7e9</color>
 	<color name="colorPrimaryDark">#037e9c</color>
 	<color name="colorAccent">#ec7507</color>
+	<color name="colorGray">#999999</color>
 	<color name="ratingsFive">#009900</color>
 	<color name="ratingsFour">#66CC00</color>
 	<color name="ratingsThree">#ccbc11</color>

@@ -1,6 +1,4 @@
 
-Ñ
-Tapp/src/main/java/com/example/canteenchecker/canteenmanager/ui/CommentsFragment.java,3/a/3ad323c1fcb89abe7c78cde68c5289db0299a878
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 R
@@ -17,10 +15,6 @@ Y
 )app/src/main/res/layout/activity_main.xml,7/6/76b07e40f24cce093536731477540f12e7da3cb6
 \
 ,app/src/main/res/layout/fragment_details.xml,6/c/6c365c1ce3140cca73b288b966211b8562d21ce9
-]
--app/src/main/res/layout/fragment_comments.xml,1/4/149285a4419741e5ff34e4abc95062f52b1ac7c8
-\
-,app/src/main/res/layout/fragment_reviews.xml,b/b/bb868ec2abaa99298e83fb17dca7d61caff460d3
 Ä
 Papp/src/main/java/com/example/canteenchecker/canteenmanager/core/ReviewData.java,5/7/578a5a0cc6ad333a4b29036cc11c68d649562011
 }
@@ -34,6 +28,14 @@ capp/src/main/java/com/example/canteenchecker/canteenmanager/service/MyFirebaseM
 Å
 Qapp/src/main/java/com/example/canteenchecker/canteenmanager/ui/LoginActivity.java,9/3/9309b8a7de7493359dff77b51bab9a06e6ed2d9d
 Ä
-Papp/src/main/java/com/example/canteenchecker/canteenmanager/ReviewsFragment.java,9/2/92298219468fe7b217ba402043e1ca571ae507e5
-Ä
 Papp/src/main/java/com/example/canteenchecker/canteenmanager/ui/MainActivity.java,d/1/d19d9b0b48982398bad67ec4d3971cfcef471df5
+ä
+Zapp/src/main/java/com/example/canteenchecker/canteenmanager/CanteenManagerApplication.java,a/2/a24f25d04755019b59935caef1a44b49958da0c9
+|
+Lapp/src/main/java/com/example/canteenchecker/canteenmanager/core/Rating.java,f/6/f67413027b4ccc8ff8704bb48c75466ce68b008a
+å
+\app/src/main/java/com/example/canteenchecker/canteenmanager/ui/RatingStatisticsFragment.java,a/3/a339405fc4ab8db995cbf09cc6e17f46bfcc854f
+É
+Sapp/src/main/java/com/example/canteenchecker/canteenmanager/ui/RatingsFragment.java,8/3/8351ab8d3be90bac4fb678c4de5f49cc3ca937da
+â
+Yapp/src/main/java/com/example/canteenchecker/canteenmanager/ui/RatingDetailsActivity.java,8/2/82473e7c1caf2a9346057a0632d58072b3a77f82
