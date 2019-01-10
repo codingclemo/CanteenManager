@@ -45,12 +45,14 @@
 
 	<TextView
 		android:id="@+id/txvRemark"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/distance_large"
+
 		style="@android:style/TextAppearance.Medium"
 		app:layout_constraintTop_toBottomOf="@id/rtbAverageRating"
-		app:layout_constraintStart_toStartOf="parent"/>
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:layout_margin="@dimen/distance_large"/>
 
 	<TextView
 		android:id="@+id/txvUserName"

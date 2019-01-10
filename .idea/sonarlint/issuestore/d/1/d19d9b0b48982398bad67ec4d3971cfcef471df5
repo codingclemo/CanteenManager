@@ -1,7 +1,7 @@
 
-\"squid:SwitchLastCaseIsDefaultCheck4""Add a default case to this switch.(øå´¡ÿÿÿÿÿ8œü­š‚-
-nsquid:S13014"KReplace this "switch" statement by "if" statements to increase readability.(øå´¡ÿÿÿÿÿ8œü­š‚-
-Zsquid:S1905#"7Remove this unnecessary cast to "BottomNavigationView".(úÒ…×ıÿÿÿÿ8œü­š‚-
-Esquid:S1068"'Remove this unused "TAG" private field.(Ç“¯8œü­š‚-
-~squid:S1450"[Remove the "mTextMessage" field and declare it as a local variable in the relevant methods.(×°¼ùøÿÿÿÿ8œü­š‚-
-Ssquid:S1068"0Remove this unused "mTextMessage" private field.(×°¼ùøÿÿÿÿ8œü­š‚-
+\"squid:SwitchLastCaseIsDefaultCheck4""Add a default case to this switch.(øå´¡ÿÿÿÿÿ8†ûÏÂ‚-
+Esquid:S1068"'Remove this unused "TAG" private field.(Ç“¯8†ûÏÂ‚-
+Ssquid:S1068"0Remove this unused "mTextMessage" private field.(×°¼ùøÿÿÿÿ8†ûÏÂ‚-
+~squid:S1450"[Remove the "mTextMessage" field and declare it as a local variable in the relevant methods.(×°¼ùøÿÿÿÿ8†ûÏÂ‚-
+nsquid:S13014"KReplace this "switch" statement by "if" statements to increase readability.(øå´¡ÿÿÿÿÿ8†ûÏÂ‚-
+Zsquid:S1905#"7Remove this unnecessary cast to "BottomNavigationView".(úÒ…×ıÿÿÿÿ8†ûÏÂ‚-

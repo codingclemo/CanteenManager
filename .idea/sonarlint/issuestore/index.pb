@@ -39,3 +39,5 @@ Lapp/src/main/java/com/example/canteenchecker/canteenmanager/core/Rating.java,f
 Sapp/src/main/java/com/example/canteenchecker/canteenmanager/ui/RatingsFragment.java,8/3/8351ab8d3be90bac4fb678c4de5f49cc3ca937da
 ‰
 Yapp/src/main/java/com/example/canteenchecker/canteenmanager/ui/RatingDetailsActivity.java,8/2/82473e7c1caf2a9346057a0632d58072b3a77f82
+<
+build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35

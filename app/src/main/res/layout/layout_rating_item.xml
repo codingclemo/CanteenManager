@@ -17,10 +17,13 @@ android:layout_margin="@dimen/distance_extra_small">
 		app:layout_constraintTop_toTopOf="parent" />
 	<TextView
 		android:id="@+id/txvRemark"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintStart_toStartOf="@id/txvUserName"
-		app:layout_constraintTop_toBottomOf="@id/txvUserName" />
+		android:layout_marginLeft="@dimen/distance_small"
+		android:layout_marginRight="@dimen/distance_small"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/txvUserName"
+		app:layout_constraintEnd_toEndOf="parent"/>
 	<RatingBar
 		android:id="@+id/rtbAverageRating"
 		android:layout_width="wrap_content"

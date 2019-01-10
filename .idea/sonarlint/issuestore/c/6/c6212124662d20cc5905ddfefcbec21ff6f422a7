@@ -1,10 +1,12 @@
 
-ysquid:S00116"ZRename this field "EdtMenuOfTheDay" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥÷—x8¤Ê®œ‚-
-xsquid:S00116¡"XRename this field "EdtWebAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å¬İŒ8¤Ê®œ‚-
-wsquid:S00116Ÿ"WRename this field "EdtMenuPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÓÃ©8¤Ê®œ‚-
-}squid:S1488U"_Immediately return this expression instead of assigning it to the temporary variable "canteen".(Ê¦ƒÊ8¤Ê®œ‚-
-~squid:S00116¤"YRename this field "SkbWaitingTime" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ¤é¸øÿÿÿÿ8¤Ê®œ‚-
-~squid:S00116"YRename this field "EdtCanteenName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ìä§ıÿÿÿÿ8¤Ê®œ‚-
-xsquid:S00116¢"SRename this field "EdtPhone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(” â¤ıÿÿÿÿ8¤Ê®œ‚-
-nsquid:CommentedOutCodeLineG"<This block of commented-out lines of code should be removed.(¼š±¡øÿÿÿÿ8¤Ê®œ‚-
-zsquid:S00116 "URename this field "EdtAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜¨ªùÿÿÿÿ8¤Ê®œ‚-
+ysquid:S00116å"YRename this field "EdtCanteenName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ÛöÕ8´°ÎÂ‚-
+}squid:S00116é"XRename this field "EdtWebAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚‰´µúÿÿÿÿ8´°ÎÂ‚-
+bsquid:S1155³">Use isEmpty() to check whether the collection is empty or not.(¦Áøÿÿÿÿ8´°ÎÂ‚-
+zsquid:S00116è"URename this field "EdtAddress" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×éòğÿÿÿÿÿ8´°ÎÂ‚-
+|squid:S00116ç"WRename this field "EdtMenuPrice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿ­Şüÿÿÿÿ8´°ÎÂ‚-
+xsquid:S00116ê"SRename this field "EdtPhone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªÿÓ¼şÿÿÿÿ8´°ÎÂ‚-
+squid:S00116æ"ZRename this field "EdtMenuOfTheDay" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Äå‰Âıÿÿÿÿ8´°ÎÂ‚-
+}squid:S1488u"_Immediately return this expression instead of assigning it to the temporary variable "canteen".(Ê¦ƒÊ8´°ÎÂ‚-
+¥squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÛË¹”øÿÿÿÿ8´°ÎÂ‚-
+ysquid:S00116ì"YRename this field "SkbWaitingTime" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä ‹Õ8´°ÎÂ‚-
+ squid:S1186•"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°ÑŞ™8´°ÎÂ‚-
